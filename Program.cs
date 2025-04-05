@@ -161,6 +161,107 @@ class Program
     }
 }
 
+/*
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        string fileName;
+        string tempfile02 = "tempfile01.txt"; // Writer 1
+        string tempfile03 = "tempfile02.txt"; // Writer 2
+
+        Console.WriteLine("Enter file name:");
+        fileName = Console.ReadLine();
+
+        using (StreamReader reader = new StreamReader(fileName))
+        using (StreamWriter writer1 = new StreamWriter(tempfile02))
+        using (StreamWriter writer2 = new StreamWriter(tempfile03))
+        {
+            int fib1 = 1, fib2 = 1;
+            int activeFib1 = fib1, activeFib2 = fib2;
+            int totalWritten1 = 0, totalWritten2 = 0;
+
+            string line = reader.ReadLine();
+            if (!int.TryParse(line, out int prevNumb)) return;
+
+            StreamWriter activeWriter = writer1;
+            bool writingToFirst = true; // true = writer1, false = writer2
+
+            activeWriter.Write(prevNumb);
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (!int.TryParse(line, out int number)) continue;
+
+                if (number >= prevNumb)
+                {
+                    activeWriter.Write(" " + number);
+                }
+                else
+                {
+                    activeWriter.WriteLine(); // закончился подмассив
+
+                    // учёт подмассивов
+                    if (writingToFirst) totalWritten1++;
+                    else totalWritten2++;
+
+                    // проверка: достигли ли лимита
+                    if (totalWritten1 >= activeFib1 && totalWritten2 >= activeFib2)
+                    {
+                        int next = fib1 + fib2;
+                        fib1 = fib2;
+                        fib2 = next;
+                        activeFib1 = fib1;
+                        activeFib2 = fib2;
+
+                    }
+
+                    // переключаемся на нужный поток
+                    if (totalWritten1 < activeFib1)
+                    {
+                        activeWriter = writer1;
+                        writingToFirst = true;
+                    }
+                    else if (totalWritten2 < activeFib2)
+                    {
+                        activeWriter = writer2;
+                        writingToFirst = false;
+                    }
+
+                    // начинаем новый подмассив
+                    activeWriter.Write(number);
+                }
+
+                prevNumb = number;
+            }
+
+            activeWriter.WriteLine();
+            if (writingToFirst) totalWritten1++;
+            else totalWritten2++;
+
+            // Дописываем недостающие EMPTY
+            while (totalWritten1 < activeFib1)
+            {
+                writer1.WriteLine("EMPTY");
+                totalWritten1++;
+            }
+
+            while (totalWritten2 < activeFib2)
+            {
+                writer2.WriteLine("EMPTY");
+                totalWritten2++;
+            }
+
+            activeWriter.WriteLine(); // Завершить последний подмассив
+        }
+
+        MergeFiles()
+
+        Console.WriteLine("Подмассивы распределены без накопления в памяти.");
+    }
+*/
 
 
 
