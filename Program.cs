@@ -160,6 +160,43 @@ class Program
             Console.WriteLine("Масив розбито на файли");
     }
 }
+/**
+        static bool TryReadNextNumber(StreamReader reader, out int result, out bool isEmptyMarker)
+        {
+            result = 0;
+            string number = "";
+            isEmptyMarker = false;
+            while (!reader.EndOfStream)
+            {
+                int ch = reader.Read();
+
+                // конец строки = закончить
+                if (ch == '\n' || ch == '\r')
+                    break;
+
+                if (char.IsWhiteSpace((char)ch))
+                {
+                    if (number.Length > 0)
+                        break; // число закончилось
+                    else
+                        continue; // пропускаем лишние пробелы
+                }
+
+                number += (char)ch;
+            }
+
+            if (number == "E")
+            {
+                isEmptyMarker = true;
+                return true;
+            }
+            if (int.TryParse(number, out result))
+            {
+                return true;
+            }
+
+            return false;
+        }
 
 /*
 using System;
